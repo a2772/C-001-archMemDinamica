@@ -116,50 +116,23 @@ int main(){
 	
 	
 ///Match con palabras reservadas e impresión final
-	for(i=0;i<rows;i++){
-		printf("%s",cntFile[i]);
-	}
-	/*
-	int cRes=0;
-	for(i=0;i<rows;i++) {
-		for(j=0;j<nReservadas;j++){
-			if((strstr(cntFile[i],cntRes[j]))!=NULL) {//Si es palabra reservada
-				j=nReservadas;
-				cRes++;
-			}
-		}
-	}
-	nLine = (int*)malloc(cRes*sizeof(int));
-	//Ubicamos las líneas con palabras reservadas y las almacenamos en la matriz
-	
-	
-	
-	cRes=0;//Lo reutilizamos para nLine
-	for(i=0;i<rows;i++) {
-		for(j=0;j<nReservadas;j++){
-			if(!(strcmp2(cntFile[i],cntRes[j]))) {//Si es palabra reservada
-				printf("%s",cntFile[i]);
-				nLine[cRes]=i;
-				cntRes++;
-				j=nReservadas;
-			}
-		}
-	}
 	///Imprimimos las líneas con palabras reservadas
-	printf("\t***Lineas con palabras reservadas***\n-----------------------------------------------\n");
-	for(i=0;i<cRes;i++) {
-		printf("%i) %s",(i+1),cntFile[nLine[i]]);
+	printf("\n\t***Lineas con palabras reservadas***\n-----------------------------------------------\n");
+	char aux[M],aux2[N];
+	for(i=0;i<rows;i++) {
+		for(j=0;j<nReservadas;j++){
+			if((strcmp3(cntFile[i],cntRes[j]))!=-1) {//Si es palabra reservada
+				printf("%s",cntFile[i]);
+			}
+		}
 	}
-	
-	
-	
 	///Liberamos memoria dinámica	
 	free(cntRes);
 	free(content);
-	free(cntFile);*/
+	free(cntFile);
 	return 0;
 }
-int strcmp2(char* cadena, char* palabra){
+int strcmp2(char* cadena, char* palabra){//Devuelve -1 si la cadena no se encuentra
     int i, j = 0;
     for(i=0;i<strlen(cadena);i++){
         if(palabra[j] == cadena[i]){
@@ -170,4 +143,22 @@ int strcmp2(char* cadena, char* palabra){
         else j = 0;
     }
     return -1;
+}
+int strcmp3(char* cadena, char* palabra){//Devuelve -1 si la cadena no se encuentra y 0 si la encuentra
+    int i = 0, j = 0, flag=-1;
+    while(flag==0 && cadena[i]!='\0'){
+    	if(cadena[i]==palabra[j]){
+    		for(j=0;j<strlen(palabra);j++){
+    			j++;
+    			i++;
+    			if(cadena[i]!=palabra[j]){
+    				j=strlen(palabra);
+				}else if(j+1==strlen(palabra)){
+					j=strlen(palabra);
+					flag=0;
+				}
+			}
+		}
+	}
+    return flag;
 }
